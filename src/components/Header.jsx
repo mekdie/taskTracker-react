@@ -6,18 +6,22 @@ import { Button } from "./Button";
 // taking the title from props / parameter
 
 const Header = ({ title }) => {
+  //onClick behaviour
+  const onClick = () => {
+    console.log("Click");
+  };
   return (
     <header className="header">
       <h1>{title}</h1>
       {/* Passing props to button component */}
-      <Button color="green" text="Add" />
+      <Button color="green" text="Add" onClick={onClick} />
     </header>
   );
 };
 
-// Header.defaultProps = {
-//   title: 1,
-// };
+Header.defaultProps = {
+  title: "Task Tracker",
+};
 
 Header.propTypes = {
   title: PropTypes.string.isRequired,
