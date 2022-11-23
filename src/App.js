@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import Header from "./components/Header";
 import { Tasks } from "./components/Tasks";
+import AddTask from "./components/AddTask";
+
 import { useState } from "react";
 //this is a functional component jsx instead of the class components
 
@@ -21,8 +23,8 @@ function App() {
     },
     {
       id: 3,
-      text: "Meeting at Babio",
-      day: "Feb 6th at 1:30pm",
+      text: "Lunch at Padang",
+      day: "Feb 8th at 12:30pm",
       reminder: true,
     },
   ]);
@@ -40,10 +42,25 @@ function App() {
       )
     );
   };
+
+  //Add Task function
+  const addTask = (taskToBeAdded) => {
+    // console.log(taskToBeAdded);
+    const id = Math.floor(Math.random() * 10000) + 1; //giving random id
+
+    //add a new task by inserting id and all values from taskToBeAdded
+    const newTask = { id, ...taskToBeAdded };
+
+    //set as an array by copying the current task that does already exists (tasks), and also add a new task onto it
+
+    // [{obj1}, {obj2}, {obj3}....., {newObj}] array of objects
+    setTasks([...tasks, newTask]);
+  };
   // const name = "Brad";
   return (
     <div className="container">
       <Header />
+      <AddTask onAdd={addTask} />
       {tasks.length > 0 ? (
         <Tasks
           tasksProp={tasks}
