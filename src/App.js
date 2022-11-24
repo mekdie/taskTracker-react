@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import { Tasks } from "./components/Tasks";
 import AddTask from "./components/AddTask";
+import TaskDetails from "./components/TaskDetails";
 import Footer from "./components/Footer";
 
 // useState: use the state as the on from class
@@ -111,6 +112,7 @@ function App() {
         {/* set the value of boolean into the opposite like on /off */}
         <Header onAdd={() => setShow(!showAddTask)} bool={showAddTask} />
 
+        {/* like a fragment / component that shows depends on the URL  */}
         <Routes>
           <Route
             path="/"
@@ -131,6 +133,7 @@ function App() {
             }
           />
           <Route path="/about" element={<About />} />
+          <Route path="/task/:id" element={<TaskDetails />} />
         </Routes>
         <Footer />
       </div>
