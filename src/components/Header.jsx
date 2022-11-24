@@ -5,16 +5,17 @@ import { Button } from "./Button";
 //destructuring of props
 // taking the title from props / parameter
 
-const Header = ({ title }) => {
+const Header = ({ title, onAdd, bool }) => {
   //onClick behaviour
-  const onClick = () => {
-    console.log("Click");
-  };
   return (
     <header className="header">
       <h1>{title}</h1>
       {/* Passing props to button component */}
-      <Button color="green" text="Add" onClick={onClick} />
+      <Button
+        color={bool ? "Red" : "Green"}
+        text={bool ? "Close" : "Add"}
+        onClick={onAdd}
+      />
     </header>
   );
 };

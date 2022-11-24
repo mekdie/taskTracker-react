@@ -8,6 +8,7 @@ import { useState } from "react";
 //this is a functional component jsx instead of the class components
 
 function App() {
+  const [showAddTask, setShow] = useState(false);
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -59,8 +60,10 @@ function App() {
   // const name = "Brad";
   return (
     <div className="container">
-      <Header />
-      <AddTask onAdd={addTask} />
+      {/* set the value of boolean into the opposite like on /off */}
+      <Header onAdd={() => setShow(!showAddTask)} bool={showAddTask} />
+      {/* if both of them are false, then doesn't show at all and vice versa  */}
+      {showAddTask && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? (
         <Tasks
           tasksProp={tasks}
