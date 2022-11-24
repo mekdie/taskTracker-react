@@ -4,31 +4,37 @@ import Header from "./components/Header";
 import { Tasks } from "./components/Tasks";
 import AddTask from "./components/AddTask";
 
-import { useState } from "react";
+// useState: use the state as the on from class
+// useEffect: use to deal with sideEffects, used when something to happen on page load
+import { useState, useEffect } from "react";
 //this is a functional component jsx instead of the class components
 
 function App() {
   const [showAddTask, setShow] = useState(false);
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      text: "Doctors Appointment",
-      day: "Feb 5th at 2:30pm",
-      reminder: false,
-    },
-    {
-      id: 2,
-      text: "Meeting at School",
-      day: "Feb 6th at 1:30pm",
-      reminder: true,
-    },
-    {
-      id: 3,
-      text: "Lunch at Padang",
-      day: "Feb 8th at 12:30pm",
-      reminder: true,
-    },
-  ]);
+  const [tasks, setTasks] = useState([]);
+
+  //do something after render is complete
+  useEffect(() => {
+    //need to be async because fetchTasks is returning a promise
+    const getTasks = async () => {
+      const tasksFromServer = await fetchTasks();
+      setTasks(tasksFromServer);
+    };
+
+    getTasks();
+  }, []);
+
+  // Fetching data from db.json server
+
+  const fetchTasks = async () => {
+    // wait until fetch is complete then put into the res variable
+
+    //because fetch return a promises so we need to await
+    const res = await fetch("http://localhost:5000/tasks");
+    const data = await res.json();
+
+    return data;
+  };
 
   // Delete Task
   const deleteTask = (id) => {
