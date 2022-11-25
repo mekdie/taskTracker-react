@@ -1,6 +1,6 @@
 # React Initial Basic Project (Task Tracker App)
 
-This project was a tutorial based from Brad Traversy aka Traversy Media from YouTube(https://www.youtube.com/watch?v=w7ejDZ8SWv8).
+This project was a tutorial based from Brad Traversy aka Traversy Media from [YouTube](https://www.youtube.com/watch?v=w7ejDZ8SWv8)
 
 ## Custom Additional Features (v1.1)
 
@@ -19,18 +19,23 @@ This project was a tutorial based from Brad Traversy aka Traversy Media from You
 
 ## Available Scripts
 
-### `git clone https://github.com/mekdie/taskTracker-react.git`
+### Clone this repository into your local storage
 
-Clone this repository into your local storage
+```
+    git clone https://github.com/mekdie/taskTracker-react.git
 
-## `npm install`
+```
 
-Install dependencies into your local machine based on package.json
+### Install dependencies into your local machine based on package.json
 
-### `npm start`
+```
+    npm install
+```
 
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-### `npm run server`
+`npm install`
 
-Open [http://localhost:5000](http://localhost:5000) to view it in your browser.
+### Open [http://localhost:5000](http://localhost:5000) to view it in your browser.
+
+`npm run server`
