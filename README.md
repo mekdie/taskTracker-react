@@ -22,8 +22,7 @@ This project was a tutorial based from Brad Traversy aka Traversy Media from [Yo
 ### Clone this repository into your local storage
 
 ```
-    git clone https://github.com/mekdie/taskTracker-react.git
-
+git clone https://github.com/mekdie/taskTracker-react.git
 ```
 
 ### Install dependencies into your local machine based on package.json
@@ -34,8 +33,12 @@ This project was a tutorial based from Brad Traversy aka Traversy Media from [Yo
 
 ### Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-`npm install`
+```
+    npm install
+```
 
 ### Open [http://localhost:5000](http://localhost:5000) to view it in your browser.
 
-`npm run server`
+```
+    npm run server
+```
