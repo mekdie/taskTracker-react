@@ -1,15 +1,16 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React from "react";
+import { Route, Routes, redirect } from "react-router-dom";
 
 import Header from "./components/Header";
 import { Tasks } from "./components/Tasks";
 import AddTask from "./components/AddTask";
 import TaskDetails from "./components/TaskDetails";
+import TaskEdit from "./components/TaskEdit";
 import Footer from "./components/Footer";
 
 // useState: use the state as the on from class
 // useEffect: use to deal with sideEffects, used when something to happen on page load
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useContext } from "react";
 //this is a functional component jsx instead of the class components
 
 import About from "./components/About";
@@ -17,8 +18,13 @@ import About from "./components/About";
 function App() {
   const [showAddTask, setShow] = useState(false);
   const [tasks, setTasks] = useState([]);
-
   //do something after render is complete
+
+  //use this to prevent infinite loop
+  const tasksData = useMemo(() => tasks);
+  const tasksContext = useContext(tasks);
+  //NOT RENDERING IF USING REDIRECT / NAVIGATE
+
   useEffect(() => {
     //need to be async because fetchTasks is returning a promise
     const getTasks = async () => {
@@ -27,7 +33,16 @@ function App() {
     };
 
     getTasks();
+    // console.log("get");
+    // console.log(tasks[Object.keys(tasks)[0]].text);
   }, []);
+  //https://stackoverflow.com/questions/70311904/react-useeffect-is-not-triggering-on-redirect
+
+  // The 2nd parameter to useEffect tells it when it needs to run.
+  // It only runs if one of the values in the array has changed.
+  // Since you pass an empty array, none of the values in it have changed.
+
+  //HOWEVER IT WILL BE AN INFINITE  LOOPS
 
   // Fetching data from db.json server
 
@@ -105,39 +120,60 @@ function App() {
     // // [{obj1}, {obj2}, {obj3}....., {newObj}] array of objects
     // setTasks([...tasks, newTask]);
   };
-  // const name = "Brad";
-  return (
-    <Router>
-      <div className="container">
-        {/* set the value of boolean into the opposite like on /off */}
-        <Header onAdd={() => setShow(!showAddTask)} bool={showAddTask} />
 
-        {/* like a fragment / component that shows depends on the URL  */}
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                {/* if both of them are false, then doesn't show at all and vice versa  */}
-                {showAddTask && <AddTask onAdd={addTask} />}
-                {tasks.length > 0 ? (
-                  <Tasks
-                    tasksProp={tasks}
-                    onDelete={deleteTask}
-                    onToggle={toggleReminder}
-                  />
-                ) : (
-                  "No Task found"
-                )}
-              </>
-            }
-          />
-          <Route path="/about" element={<About />} />
-          <Route path="/task/:id" element={<TaskDetails />} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
+  //Edit Task function
+  const editTask = async (id, newDetails) => {
+    const taskUpdate = { ...newDetails };
+
+    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(taskUpdate),
+    });
+
+    const data = await res.json();
+
+    //iterating to each tasks and update the data with same id to recently edited details
+    setTasks(tasks.map((task) => (task.id === id ? { data } : task)));
+
+    return redirect("/");
+  };
+
+  return (
+    // <Router>
+    <div className="container">
+      {/* set the value of boolean into the opposite like on /off */}
+      <Header onAdd={() => setShow(!showAddTask)} bool={showAddTask} />
+
+      {/* like a fragment / component that shows depends on the URL  */}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              {/* if both of them are false, then doesn't show at all and vice versa  */}
+              {showAddTask && <AddTask onAdd={addTask} />}
+              {tasks.length > 0 ? (
+                <Tasks
+                  tasksProp={tasks}
+                  onDelete={deleteTask}
+                  onToggle={toggleReminder}
+                />
+              ) : (
+                "No Task found"
+              )}
+            </>
+          }
+        />
+        <Route path="/about" element={<About />} />
+        <Route path="/task/:id" element={<TaskDetails />} />
+        <Route path="/taskEdit/:id" element={<TaskEdit onEdit={editTask} />} />
+      </Routes>
+      <Footer />
+    </div>
+    // </Router>
   );
 }
 

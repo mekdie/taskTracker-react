@@ -11,7 +11,7 @@ import { useLocation } from "react-router-dom";
 
 const Header = ({ title, onAdd, bool }) => {
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
 
   //onClick behaviour
   return (

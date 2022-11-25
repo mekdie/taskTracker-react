@@ -19,9 +19,14 @@ export const Task = ({ task, onDeleteProp, onToggle }) => {
         />
       </h3>
       <p>{task.day}</p>
-      <p>
-        <Link to={`/task/${task.id}`}>View Details</Link>
-      </p>
+      <div style={{ display: "flex" }}>
+        <p>
+          <Link to={`/task/${task.id}`}>View Details</Link>
+        </p>
+        <p style={{ marginLeft: "10px" }}>
+          <Link to={`/taskEdit/${task.id}`}>Edit Details</Link>
+        </p>
+      </div>
     </div>
   );
 };
